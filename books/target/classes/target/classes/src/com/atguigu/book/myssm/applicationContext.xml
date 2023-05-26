@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--编写规范-->
+<!DOCTYPE beans [
+        <!ELEMENT beans (bean*)>
+        <!ELEMENT bean (property*)>
+        <!ELEMENT property (#PCDATA)>
+
+        <!ATTLIST bean id ID #REQUIRED>
+        <!ATTLIST bean class CDATA #IMPLIED>
+        <!ATTLIST property name CDATA #IMPLIED>
+        <!ATTLIST property ref IDREF #IMPLIED>
+]>
+<beans>
+
+    <bean id="page" class="com.atguigu.book.myssm.PageController"></bean>
+    <bean id="userDAO" class="com.atguigu.book.Impl.UserDAOImpl"></bean>
+    <bean id="bookDAO" class="com.atguigu.book.Impl.BookDAOImpl"></bean>
+    <bean id="cartItemDAO" class="com.atguigu.book.Impl.CartItemDAOImpl"></bean>
+
+    <bean id="userService" class="com.atguigu.book.Impl.UserServiceImpl">
+        <property name="userDAO" ref="userDAO"></property>
+    </bean>
+    <bean id="bookService" class="com.atguigu.book.Impl.BookServiceImpl">
+        <property name="bookDAO" ref="bookDAO"></property>
+    </bean>
+    <bean id="cartItemService" class="com.atguigu.book.Impl.CartItemServiceImpl">
+        <property name="cartItemDAO" ref="cartItemDAO"></property>
+        <property name="bookService" ref="bookService"></property>
+    </bean>
+
+    <bean id="user" class="com.atguigu.book.controller.UserController">
+        <property name="userService" ref="userService"></property>
+        <property name="cartItemService" ref="cartItemService"></property>
+    </bean>
+    <bean id="book" class="com.atguigu.book.controller.BookController">
+        <property name="bookService" ref="bookService"></property>
+    </bean>
+    <bean id="cart" class="com.atguigu.book.controller.CartController">
+        <property name="cartItemService" ref="cartItemService"></property>
+    </bean>
+
+</beans>
